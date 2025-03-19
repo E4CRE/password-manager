@@ -1,2 +1,2 @@
 # Python Password Manager
-Python Password Manager with SQL
+Python Password Manager using SQL.
