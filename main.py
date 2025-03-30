@@ -90,20 +90,27 @@ def add():
         sql_command_add = """INSERT INTO logins(platform,email,usernames,passwords) VALUES(?,?,?,?)"""
         cursor.execute(sql_command_add,(platform,email,username,password))
         db.commit()
-        print("[✓]Item added")
+        print("\033[92m[✓] Item added\033[00m")
 
     elif valid == "N" or valid =="n":
         return add()
     
 
 def remove():
-    pass
+    L = """SELECT platform FROM logins"""
+    cursor.execute(L)
+    platforms = cursor.fetchall()
+    print(platforms,"Select the platform you want to delete.")
+
+    platform = input("Wich one do you want to delete ?")
+    sql_command_rm = "DELETE FROM logins where platform = ?"
+    cursor.execute(sql_command_rm,(platform,))
+    db.commit()
+    print(f"\033[92m[✓] {platform} has been deleted.\033[00m")
 
 def check():
     pass
 
-def remove():
-    pass
 
 def read():
     L = """SELECT platform FROM logins"""
@@ -119,7 +126,7 @@ def read():
     if val:
         print(val)
     else:
-        print("No data found for this platform.")
+        print("\033[91m [✗]No data found for this platform.\033[00m")
     
     return val
 
@@ -133,7 +140,7 @@ db = sqlite3.connect("psdmng.db")
 #Set a cursor
 cursor = db.cursor()
 #If the print works, the connection is established
-print("DB is connected")
+print("\033[92m[✓]DB is connected \033[00m")
 
 #Check if a table exists.
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
@@ -149,3 +156,5 @@ menu()
 
 #Close th db 
 db.close()
+
+
